@@ -12,5 +12,6 @@ public class KitchenObjectSO : ScriptableObject
     public bool sliceable;
     public bool canBeCookedFurther;
     public int maxSlices;
+    
 
 }
