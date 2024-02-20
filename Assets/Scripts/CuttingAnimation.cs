@@ -9,7 +9,7 @@ public class CuttingAnimation : MonoBehaviour
 
     private void Update()
     {
-        if (Player.selectedCounter != null && cuttingCounter.HasKitchenObject() )
+        if (Player.selectedCounter != null && cuttingCounter.HasKitchenObject() && Player.selectedCounter.transform == cuttingCounter.transform)
         {
             //this counter has a kitchen object on top
            if(cuttingCounter.getKitchenObject().GetKitchenObjectSO().sliceable)

@@ -12,18 +12,26 @@ public class PlatesCounter : BaseCounter
     }
 
     [SerializeField] KitchenObjectSO plateSO;
+    [SerializeField] TrashCounter trashCounter;
 
     List<GameObject> plateVisiuals = new List<GameObject>();
 
 
     private void Start()
     {
+        trashCounter.OnPlateAmountChangedX += TrashCounter_OnPlateAmountChangedX;
+
         for(int i=0; i<4; i++)
         {
             plateVisiuals.Add(new GameObject());
         }
     }
 
+    private void TrashCounter_OnPlateAmountChangedX(object sender, EventArgs e)
+    {
+        plateVisiuals.Add(new GameObject());
+        OnPlateAmountChanged?.Invoke(this, new OnPlateAmountChangedEventArgs { plateAmount = plateVisiuals.Count });
+    }
 
     public override void Interact(Player player)
     {

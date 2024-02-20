@@ -914,6 +914,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlateCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 4376389449954927083, guid: 532c2a461aa677544b5db4a4f0271bfe,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.3916969
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376389449954927083, guid: 532c2a461aa677544b5db4a4f0271bfe,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376389449954927083, guid: 532c2a461aa677544b5db4a4f0271bfe,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.054151535
+      objectReference: {fileID: 0}
     - target: {fileID: 5127197772805428076, guid: 532c2a461aa677544b5db4a4f0271bfe,
         type: 3}
       propertyPath: m_Mesh
