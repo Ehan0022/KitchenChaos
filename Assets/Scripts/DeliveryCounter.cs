@@ -29,7 +29,8 @@ public class DeliveryCounter : BaseCounter
     {
         orderList.Add(e.orderKitchenObjectSOList);
     }
-
+    
+    /*
     private void Update()
     {
         Debug.Log("Order list lenght" + orderList.Count);
@@ -39,7 +40,8 @@ public class DeliveryCounter : BaseCounter
             order2 = orderList[1];
             order3 = orderList[2];
         }
-    }
+    }*/
+
     public override void Interact(Player player)
     {
         Debug.Log("Interact happens");
