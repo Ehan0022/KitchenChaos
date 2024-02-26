@@ -7,40 +7,17 @@ using System;
 public class DeliveryCounter : BaseCounter
 {
     [SerializeField] private OrderGenerator orderGenerator;
-    [SerializeField] private List<List<KitchenObjectSO>> orderList;
 
-    [SerializeField] private List<KitchenObjectSO> order1;
-    [SerializeField] private List<KitchenObjectSO> order2;
-    [SerializeField] private List<KitchenObjectSO> order3;
+    [SerializeField] private List<Order> orderList;
+
 
     [SerializeField] private KitchenObjectSO cheese;
     [SerializeField] private KitchenObjectSO cabbage;
     [SerializeField] private KitchenObjectSO tomatoes;
+    [SerializeField] private KitchenObjectSO bread;
+    [SerializeField] private KitchenObjectSO meat;
 
-   
-    private void Start()
-    {
-        orderList = new List<List<KitchenObjectSO>>();
-        orderGenerator.OnOrderGenerated += OrderGenerator_OnOrderGenerated;
-    }
-
-
-    private void OrderGenerator_OnOrderGenerated(object sender, OrderGenerator.OnOrderGeneratedEventArgs e)
-    {
-        orderList.Add(e.orderKitchenObjectSOList);
-    }
-    
-    /*
-    private void Update()
-    {
-        Debug.Log("Order list lenght" + orderList.Count);
-        if(orderList.Count >= 3)
-        {
-            order1 = orderList[0];
-            order2 = orderList[1];
-            order3 = orderList[2];
-        }
-    }*/
+    public event EventHandler OnPlateAmountChangedY;
 
     public override void Interact(Player player)
     {
@@ -50,28 +27,23 @@ public class DeliveryCounter : BaseCounter
             //player is carrying a kitchen object
             if(player.getKitchenObject().GetKitchenObjectSO().name.Equals("Plate"))
             {
+                Debug.Log("Player is carrying a plate");
                 //player is carrying a plate
                 PlateObject plateObject = player.getKitchenObject() as PlateObject;
-                int correpondingIndex = -1;
-                for(int i = 0; i<orderList.Count; i++)
+
+                for (int i = 0; i < orderList.Count; i++)
                 {
-                    if(CompareLists(plateObject.GetIngridientsOnThePlate(), orderList[i]))
+                    if (CompareLists(plateObject.GetIngridientsOnThePlate(), orderList[i].GetOrderIngredientList()))
                     {
-                        correpondingIndex = i;
+                        Debug.Log("Players plate matched with order");
+                        //players plate matches with the order
+                        orderList[i].CompleteOrder();
+                        plateObject.DestroySelf();
+                        OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
+                        break;
                     }
                 }
-
-                if(correpondingIndex == -1)
-                {
-                    //plate is not an order
-                    Debug.Log("Is not an Order");
-                }
-                else
-                {
-                    Debug.Log("Order completed");
-                    orderList.Remove(orderList[correpondingIndex]);
-                    player.getKitchenObject().DestroySelf();
-                }
+                //players plate does not match
                 
             }
         }
@@ -86,6 +58,10 @@ public class DeliveryCounter : BaseCounter
         else if ((list1.Contains(cabbage) && !list2.Contains(cabbage)) || (!list1.Contains(cabbage) && list2.Contains(cabbage)))
             return false;
         else if ((list1.Contains(tomatoes) && !list2.Contains(tomatoes)) || (!list1.Contains(tomatoes) && list2.Contains(tomatoes)))
+            return false;
+        else if ((list1.Contains(bread) && !list2.Contains(bread)) || (!list1.Contains(bread) && list2.Contains(bread)))
+            return false;
+        else if ((list1.Contains(meat) && !list2.Contains(meat)) || (!list1.Contains(meat) && list2.Contains(meat)))
             return false;
         else
             return true;
