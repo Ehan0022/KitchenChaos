@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Order : MonoBehaviour
 {
     [SerializeField] List<Image> slotList;
     [SerializeField] List<KitchenObjectSO> fixedKitchenObjectSOList;
 
-    private List<KitchenObjectSO> orderIngredientList;
+    [SerializeField] private List<KitchenObjectSO> orderIngredientList;
     [SerializeField] private TextMeshProUGUI typeText;
     [SerializeField] private Animator animator;    
-    [SerializeField] private int orderNumber;
     [SerializeField] public bool slotOccupied = false;
 
-   
+    public float duration = 20f;
+    public float timer = 0f;
 
     private void Start()
     {
@@ -38,15 +39,36 @@ public class Order : MonoBehaviour
         }
     }
 
-    public List<KitchenObjectSO> GetOrderIngredientList()
+    public void PlayAboutToExpireAnimation()
     {
-        return orderIngredientList;
+        animator.SetBool("OrderIsAboutToExpire", true);
     }
 
-    public void CompleteOrder()
+    public void CompleteSuccesfullOrder()
     {
+        timer = 0f;
         orderIngredientList.Clear();
         animator.SetBool("OrderIsPresent", false);
         slotOccupied = false;
+        animator.SetBool("OrderIsAboutToExpire", false);
+    }
+
+    public void CompleteFailedOrder()
+    {
+        timer = 0f;
+        orderIngredientList.Clear();
+        animator.SetBool("OrderIsPresent", false);
+        slotOccupied = false;
+        animator.SetBool("OrderIsAboutToExpire", false);
+
+        for (int i = 0; i < 5; i++)
+        {
+          slotList[i].color = new Color(slotList[i].color.r, slotList[i].color.g, slotList[i].color.b, 0);         
+        }
+    }
+
+    public List<KitchenObjectSO> GetOrderIngredientList()
+    {
+        return orderIngredientList;
     }
 }

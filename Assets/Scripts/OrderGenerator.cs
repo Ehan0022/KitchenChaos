@@ -5,8 +5,6 @@ using System;
 
 public class OrderGenerator : MonoBehaviour
 {
-    
-
     public event EventHandler <OnOrderGeneratedEventArgs> OnOrderGenerated;
      
     public class OnOrderGeneratedEventArgs : EventArgs
@@ -14,7 +12,7 @@ public class OrderGenerator : MonoBehaviour
         public List<KitchenObjectSO> orderKitchenObjectSOList;
         public string type;
     }
-
+    private string sentType;
 
     private int addCheck = 0;
     private int foodCheck = 0;
@@ -23,7 +21,11 @@ public class OrderGenerator : MonoBehaviour
     //fixed items
     [SerializeField] private KitchenObjectSO bread;
     [SerializeField] private KitchenObjectSO meat;
-    
+    [SerializeField] private KitchenObjectSO tomato;
+    [SerializeField] private KitchenObjectSO cheese;
+    [SerializeField] private KitchenObjectSO cabbage;
+
+
 
     private float generateOrderTimeMax = 5;
     private float generateOrderTimer = 0;
@@ -49,7 +51,17 @@ public class OrderGenerator : MonoBehaviour
             //add the KitcjenObjectSO's that all orders will require
             orderKitchenObjectSOList.Add(bread);
             orderKitchenObjectSOList.Add(meat);
-            OnOrderGenerated?.Invoke(this, new OnOrderGeneratedEventArgs { orderKitchenObjectSOList = orderKitchenObjectSOList, type = "Burger" });
+
+            if (orderKitchenObjectSOList.Contains(tomato) && orderKitchenObjectSOList.Contains(cabbage) && orderKitchenObjectSOList.Contains(cheese))
+                sentType = "Mega Burger";
+            else if (!orderKitchenObjectSOList.Contains(tomato) && !orderKitchenObjectSOList.Contains(cabbage) && !orderKitchenObjectSOList.Contains(cheese))
+                sentType = "Plain Burger";
+            else if (orderKitchenObjectSOList.Contains(cheese))
+                sentType = "Cheese Burger";
+            else
+                sentType = "Medium Burger";
+
+            OnOrderGenerated?.Invoke(this, new OnOrderGeneratedEventArgs { orderKitchenObjectSOList = orderKitchenObjectSOList, type = sentType});
         }
         else
         {
@@ -66,7 +78,13 @@ public class OrderGenerator : MonoBehaviour
                     i = 0;
                 }
             }
-            OnOrderGenerated?.Invoke(this, new OnOrderGeneratedEventArgs { orderKitchenObjectSOList = orderKitchenObjectSOList , type= "Salad"});
+
+            if (orderKitchenObjectSOList.Contains(cheese))
+                sentType = "Cheese Salad";
+            else
+                sentType = "Salad";
+
+            OnOrderGenerated?.Invoke(this, new OnOrderGeneratedEventArgs { orderKitchenObjectSOList = orderKitchenObjectSOList , type= sentType});
         }
         
         

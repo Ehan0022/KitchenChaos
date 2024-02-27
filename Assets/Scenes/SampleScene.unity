@@ -2001,10 +2001,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   - {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
+  orderIngredientList: []
   typeText: {fileID: 1786865407}
   animator: {fileID: 1127605046}
-  orderNumber: 4
   slotOccupied: 0
+  duration: 35
+  timer: 0
 --- !u!95 &1127605046
 Animator:
   serializedVersion: 5
@@ -2015,7 +2017,7 @@ Animator:
   m_GameObject: {fileID: 1127605043}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: caf8977dadf015147aaba28c024ecdee, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4e99e6eef719fea4dab9fb32fc16d33d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2195,10 +2197,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   - {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
+  orderIngredientList: []
   typeText: {fileID: 684066941}
   animator: {fileID: 1179557176}
-  orderNumber: 3
   slotOccupied: 0
+  duration: 35
+  timer: 0
 --- !u!95 &1179557176
 Animator:
   serializedVersion: 5
@@ -2209,7 +2213,7 @@ Animator:
   m_GameObject: {fileID: 1179557173}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: caf8977dadf015147aaba28c024ecdee, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3f65c022259e8954eba4b5465d352e76, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2785,6 +2789,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   bread: {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
   meat: {fileID: 11400000, guid: 80e49bf47324ca745a817e7aaff8c3f7, type: 2}
+  tomato: {fileID: 11400000, guid: fd55acf4986743c4d8143950a2102220, type: 2}
+  cheese: {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
+  cabbage: {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
 --- !u!114 &1586117991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4496,10 +4503,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   - {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
+  orderIngredientList: []
   typeText: {fileID: 1202381722717745821}
   animator: {fileID: 1202381721997829465}
-  orderNumber: 0
   slotOccupied: 0
+  duration: 35
+  timer: 0
 --- !u!95 &1202381721997829465
 Animator:
   serializedVersion: 5
@@ -5298,10 +5307,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   - {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
+  orderIngredientList: []
   typeText: {fileID: 4214713169802653487}
   animator: {fileID: 4214713169448696039}
-  orderNumber: 2
   slotOccupied: 0
+  duration: 35
+  timer: 0
 --- !u!95 &4214713169448696039
 Animator:
   serializedVersion: 5
@@ -5312,7 +5323,7 @@ Animator:
   m_GameObject: {fileID: 4214713169448696037}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: caf8977dadf015147aaba28c024ecdee, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c618cd1c80a83d4c83f88ee46ebb45c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6662,10 +6673,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b9d859c2e2aca40468654813dc0677df, type: 2}
   - {fileID: 11400000, guid: e4d44e39968d55141a9c0543eaa3ec7a, type: 2}
   - {fileID: 11400000, guid: 0415015ebb1f4e944b4bbcaa06e727e1, type: 2}
+  orderIngredientList: []
   typeText: {fileID: 7307298966214931637}
   animator: {fileID: 7307298965593580417}
-  orderNumber: 1
   slotOccupied: 0
+  duration: 35
+  timer: 0
 --- !u!95 &7307298965593580417
 Animator:
   serializedVersion: 5
@@ -6676,7 +6689,7 @@ Animator:
   m_GameObject: {fileID: 7307298965593580415}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: caf8977dadf015147aaba28c024ecdee, type: 2}
+  m_Controller: {fileID: 9100000, guid: 280a03d3c4af1fa41a1a371f1ed5ef30, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

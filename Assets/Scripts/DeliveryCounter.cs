@@ -37,7 +37,7 @@ public class DeliveryCounter : BaseCounter
                     {
                         Debug.Log("Players plate matched with order");
                         //players plate matches with the order
-                        orderList[i].CompleteOrder();
+                        orderList[i].CompleteSuccesfullOrder();
                         plateObject.DestroySelf();
                         OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
                         break;
