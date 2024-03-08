@@ -7,6 +7,7 @@ public class CuttingAnimation : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] CutCounter cuttingCounter;
 
+    
     private void Update()
     {
         if (Player.selectedCounter != null && cuttingCounter.HasKitchenObject() && Player.selectedCounter.transform == cuttingCounter.transform)
@@ -23,3 +24,4 @@ public class CuttingAnimation : MonoBehaviour
         }       
     }
 }
+    

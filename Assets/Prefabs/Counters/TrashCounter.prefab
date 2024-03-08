@@ -62,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 0}
   kitchenObjectOnTop: {fileID: 0}
+  platesCounter: {fileID: 0}
 --- !u!1001 &1092033576697214901
 PrefabInstance:
   m_ObjectHideFlags: 0

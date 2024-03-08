@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour, IKitchenObjectParent
 {
@@ -13,6 +14,13 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public KitchenObject kitchenObjectOnTop;
 
     private bool isMoving;
+
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public BaseCounter selectedCounter;
+    }
 
     private void Start()
     {
@@ -45,6 +53,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     {
         HandleMovement();
         HandleInteractions();
+       
     }
 
     
@@ -123,21 +132,28 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         float maxDistance = 2f;
 
         
+
         //bir þeye vuruyosa true olur, vurduðu þeyi raycastHitte depolar
         if (Physics.Raycast(transform.position, lastMoveVector, out raycastHit, maxDistance, countersLayerMask))
         {
             if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                selectedCounter = baseCounter;
+                if(baseCounter != selectedCounter)
+                {
+                    selectedCounter = baseCounter;
+                    OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs { selectedCounter = selectedCounter });
+                }             
             }
             else
             {
                 selectedCounter = null;
+                OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs { selectedCounter = selectedCounter });
             }
         }
         else
         {
             selectedCounter = null;
+            OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs { selectedCounter = selectedCounter });
         }    
     }
 

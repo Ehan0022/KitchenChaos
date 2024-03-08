@@ -190,6 +190,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2068202241409286366}
     m_Modifications:
+    - target: {fileID: 1391514081158006962, guid: 0004cb1e11ad014419b943c7da960724,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3536310345365587026, guid: 1ba85bfeead668d408d59b5a3f9fb434,
+        type: 3}
     - target: {fileID: 3984833892277163771, guid: 0004cb1e11ad014419b943c7da960724,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -306,7 +312,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedCounterVisiual: {fileID: 7601023880327558663}
-  Counter: {fileID: 2068202241409286367}
+  baseCounter: {fileID: 6419885501990047260}
+  player: {fileID: 0}
 --- !u!4 &2522660092177764835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: 0004cb1e11ad014419b943c7da960724,

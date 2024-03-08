@@ -5,24 +5,29 @@ using UnityEngine;
 public class ContainerOpeningAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
-    [SerializeField] GameObject containerCounter;
+    [SerializeField] BaseCounter containerCounter;
+    [SerializeField] Player player;
 
-    private void Update()
+    private void Start()
     {
-        if(Player.selectedCounter!=null)
+        player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+    }
+
+    private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
+    {
+        if(e.selectedCounter == containerCounter)
         {
-            if (Player.selectedCounter.transform == containerCounter.transform)
-            {
-                animator.SetBool("Selected", true);
-            }
-            else
-            {
-                animator.SetBool("Selected", false);
-            }
-        } 
+            animator.SetBool("Selected", true);
+        }
         else
         {
             animator.SetBool("Selected", false);
         }
     }
-}
+
+   
+  }
+    
+
+
+    

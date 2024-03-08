@@ -5,16 +5,19 @@ using UnityEngine;
 public class SelectedCounterVisual : MonoBehaviour
 {
     [SerializeField] GameObject selectedCounterVisiual;
-    [SerializeField] GameObject Counter;
-    
-    private void Update()
+    [SerializeField] BaseCounter baseCounter;
+    [SerializeField] Player player;
+
+    private void Start()
     {
-        if (Player.selectedCounter != null)
+        player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+    }
+
+    private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
+    {
+        if(baseCounter == e.selectedCounter)
         {
-            if (Player.selectedCounter.transform == Counter.transform)
-            {
-                selectedCounterVisiual.SetActive(true);
-            }
+            selectedCounterVisiual.SetActive(true);
         }
         else
         {
