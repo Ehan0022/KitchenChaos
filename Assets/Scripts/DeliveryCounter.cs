@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 
 public class DeliveryCounter : BaseCounter
@@ -18,14 +20,24 @@ public class DeliveryCounter : BaseCounter
     [SerializeField] private KitchenObjectSO meat;
 
     public event EventHandler OnPlateAmountChangedY;
+    public event EventHandler OnOrderDeliverySuccess;
+    public event EventHandler OnOrderDeliveryFail;
+
+    private List<Order> matchingOrders;
+    private List<float> timeValues = new List<float>();
+    private void Start()
+    {
+        matchingOrders = new List<Order>();
+    }
+
 
     public override void Interact(Player player)
     {
         Debug.Log("Interact happens");
-        if(player.getKitchenObject() != null)
+        if (player.getKitchenObject() != null)
         {
             //player is carrying a kitchen object
-            if(player.getKitchenObject().GetKitchenObjectSO().name.Equals("Plate"))
+            if (player.getKitchenObject().GetKitchenObjectSO().name.Equals("Plate"))
             {
                 Debug.Log("Player is carrying a plate");
                 //player is carrying a plate
@@ -37,14 +49,25 @@ public class DeliveryCounter : BaseCounter
                     {
                         Debug.Log("Players plate matched with order");
                         //players plate matches with the order
-                        orderList[i].CompleteSuccesfullOrder();
-                        plateObject.DestroySelf();
-                        OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
-                        break;
+                        matchingOrders.Add(orderList[i]);
                     }
                 }
-                //players plate does not match
-                
+
+                for (int i = 0; i < matchingOrders.Count; i++)
+                {
+                    timeValues.Add(matchingOrders[i].timer);
+                }
+
+                int correctIndex = timeValues.IndexOf(timeValues.Max());
+
+                matchingOrders[correctIndex].CompleteSuccesfullOrder();
+                plateObject.DestroySelf();
+                ResetTimerPriorityLogicValues();
+                OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
+                OnOrderDeliverySuccess?.Invoke(this, EventArgs.Empty);
+                return;
+
+                //if code executes after this line, it means the player provided a wrong plate
             }
         }
     }
@@ -67,6 +90,9 @@ public class DeliveryCounter : BaseCounter
             return true;
     }
 
-
-
+    public void ResetTimerPriorityLogicValues()
+    {
+        timeValues.Clear();
+        matchingOrders.Clear();
+    }
 }

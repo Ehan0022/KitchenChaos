@@ -15,6 +15,8 @@ public class Order : MonoBehaviour
     [SerializeField] private Animator animator;    
     [SerializeField] public bool slotOccupied = false;
 
+
+
     public float duration = 20f;
     public float timer = 0f;
 
@@ -51,6 +53,11 @@ public class Order : MonoBehaviour
         animator.SetBool("OrderIsPresent", false);
         slotOccupied = false;
         animator.SetBool("OrderIsAboutToExpire", false);
+
+        for (int i = 0; i < 5; i++)
+        {
+            slotList[i].color = new Color(slotList[i].color.r, slotList[i].color.g, slotList[i].color.b, 0);
+        }
     }
 
     public void CompleteFailedOrder()
