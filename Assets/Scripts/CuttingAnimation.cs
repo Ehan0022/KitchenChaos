@@ -7,21 +7,15 @@ public class CuttingAnimation : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] CutCounter cuttingCounter;
 
-    
-    private void Update()
+    private void Start()
     {
-        if (Player.selectedCounter != null && cuttingCounter.HasKitchenObject() && Player.selectedCounter.transform == cuttingCounter.transform)
-        {
-            //this counter has a kitchen object on top
-           if(cuttingCounter.getKitchenObject().GetKitchenObjectSO().sliceable)
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    animator.SetTrigger("Cut");
-                }
-            }
-           
-        }       
+        cuttingCounter.OnCut += CuttingCounter_OnCut;
     }
+
+    private void CuttingCounter_OnCut(object sender, System.EventArgs e)
+    {
+        animator.SetTrigger("Cut");
+    }
+  
 }
     

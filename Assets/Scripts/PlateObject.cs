@@ -10,6 +10,8 @@ public class PlateObject : KitchenObject
      public List<KitchenObjectSO> ingredientsSO = new List<KitchenObjectSO>();
 
      public event EventHandler <OnIngridientAddedEventArgs> OnIngridientAdded;
+     public static event EventHandler OnIngridientAddedSound;
+
     public class OnIngridientAddedEventArgs : EventArgs
     {
         public KitchenObjectSO KitchenObjectSO;
@@ -31,6 +33,7 @@ public class PlateObject : KitchenObject
         {
             ingredientsSO.Add(kitchenObjectSO);
             OnIngridientAdded?.Invoke(this, new OnIngridientAddedEventArgs { KitchenObjectSO = kitchenObjectSO }) ;
+            OnIngridientAddedSound?.Invoke(this, EventArgs.Empty);
             return true;
         }
     }

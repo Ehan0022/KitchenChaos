@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CutCounter : BaseCounter
 {
@@ -8,6 +9,7 @@ public class CutCounter : BaseCounter
     [SerializeField] KitchenObjectSO kitchenObjectSOcabbage;
     [SerializeField] KitchenObjectSO kitchenObjectSOcheese;
 
+    public event EventHandler OnCut;
 
     public override void Interact(Player player)
     {
@@ -54,39 +56,47 @@ public class CutCounter : BaseCounter
     private const int tomatoMaxSlice = 4;
     public override void InteractAlternate(Player player)
     {
-
         if (HasKitchenObject() && getKitchenObject().GetKitchenObjectSO().sliceable)
         {
             //the kitchen object on top of this counter is sliceable
             if (kitchenObjectOnTop.GetKitchenObjectSO().objectName.Equals("Tomato"))
             {
                 kitchenObjectOnTop.IncrementSliceCount();
+                OnCut?.Invoke(this, EventArgs.Empty);
                 if (kitchenObjectOnTop.GetSliceCount() == tomatoMaxSlice)
                 {
                     kitchenObjectOnTop.DestroySelf();
                     KitchenObject.SpawnKitchenObject(kitchenObjectSOtomato, this);
+                    return;
                 }
+                
+
             }
 
             if (kitchenObjectOnTop.GetKitchenObjectSO().objectName.Equals("Cabbage"))
             {
                 kitchenObjectOnTop.IncrementSliceCount();
+                OnCut?.Invoke(this, EventArgs.Empty);
                 if (kitchenObjectOnTop.GetSliceCount() == cabbageMaxSlice)
                 {
                     kitchenObjectOnTop.DestroySelf();
                     KitchenObject.SpawnKitchenObject(kitchenObjectSOcabbage, this);
+                    return;
                 }
-
+                
             }
 
             if (kitchenObjectOnTop.GetKitchenObjectSO().objectName.Equals("Cheese"))
             {
                 kitchenObjectOnTop.IncrementSliceCount();
+                OnCut?.Invoke(this, EventArgs.Empty);
                 if (kitchenObjectOnTop.GetSliceCount() == cheeseMaxSlice)
                 {
                     kitchenObjectOnTop.DestroySelf();
                     KitchenObject.SpawnKitchenObject(kitchenObjectSOcheese, this);
+                    return;
                 }
+                
             }
         }
     }

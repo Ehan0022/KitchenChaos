@@ -15,7 +15,17 @@ public class Order : MonoBehaviour
     [SerializeField] private Animator animator;    
     [SerializeField] public bool slotOccupied = false;
 
+    private static int sucessfullOrders = 0;
+    private static int expiredOrders = 0;
+    private static int failedOrders = 0;
 
+    public static event EventHandler OnAnyOrderDeliverySuccess;
+    public static event EventHandler OnAnyOrderDeliveryFail;
+
+
+
+
+    [SerializeField] SoundManager soundManager;
 
     public float duration = 20f;
     public float timer = 0f;
@@ -48,6 +58,9 @@ public class Order : MonoBehaviour
 
     public void CompleteSuccesfullOrder()
     {
+        sucessfullOrders++;
+        soundManager.DeliveryCounterOnOrderDeliverySuccessSound();
+        OnAnyOrderDeliverySuccess?.Invoke(this, EventArgs.Empty);
         timer = 0f;
         orderIngredientList.Clear();
         animator.SetBool("OrderIsPresent", false);
@@ -62,6 +75,9 @@ public class Order : MonoBehaviour
 
     public void CompleteFailedOrder()
     {
+        expiredOrders++;
+        soundManager.DeliveryCounterOnOrderDeliveryFailSound();
+        OnAnyOrderDeliveryFail?.Invoke(this, EventArgs.Empty);
         timer = 0f;
         orderIngredientList.Clear();
         animator.SetBool("OrderIsPresent", false);
@@ -74,8 +90,30 @@ public class Order : MonoBehaviour
         }
     }
 
+    
+
+
     public List<KitchenObjectSO> GetOrderIngredientList()
     {
         return orderIngredientList;
+    }
+
+    public static void IncrementFailedOrders()
+    {
+        failedOrders++;
+    }
+
+    public static int GetSucessfullOrdersAmount()
+    {
+        return sucessfullOrders;
+    }
+
+    public static int GetExpiredOrdersAmount()
+    {
+        return expiredOrders;
+    }
+    public static int GetFailedOrdersAmount()
+    {
+        return failedOrders;
     }
 }

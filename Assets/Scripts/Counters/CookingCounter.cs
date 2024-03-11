@@ -69,23 +69,21 @@ public class CookingCounter : BaseCounter
     private float meatCookTime = 4;
     private float meatBurnTime = 4;
 
-    private KitchenObject lastObjectOnTop;
+    
     private void Update()
     {
-        if(!HasKitchenObject())
-        {
-            lastObjectOnTop = kitchenObjectOnTop;
-        }
+       
         
         HandleCooking();     
     }
 
 
-
+    static bool eventStopper = true;
     public void HandleCooking()
     {
         if (HasKitchenObject())
         {
+            eventStopper = true;
             if (kitchenObjectOnTop.GetKitchenObjectSO().canBeCookedFurther)
             {
                 //object on top can get cooked further
@@ -117,9 +115,10 @@ public class CookingCounter : BaseCounter
                 }
             }
         }
-        else
+        else if(!HasKitchenObject() && eventStopper )
         {
             OnCookableObjectPlaced?.Invoke(this, new OnCookableObjectPlacedEventArgs { thereIsCookableObjectOnTop = false });
+            eventStopper = false;
         }
         
 

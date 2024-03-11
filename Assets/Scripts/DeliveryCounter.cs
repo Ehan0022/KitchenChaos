@@ -20,8 +20,7 @@ public class DeliveryCounter : BaseCounter
     [SerializeField] private KitchenObjectSO meat;
 
     public event EventHandler OnPlateAmountChangedY;
-    public event EventHandler OnOrderDeliverySuccess;
-    public event EventHandler OnOrderDeliveryFail;
+    public event EventHandler OnOrderDeliveryFailDeliveryCounter;
 
     private List<Order> matchingOrders;
     private List<float> timeValues = new List<float>();
@@ -33,21 +32,29 @@ public class DeliveryCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        Debug.Log("Interact happens");
         if (player.getKitchenObject() != null)
         {
             //player is carrying a kitchen object
             if (player.getKitchenObject().GetKitchenObjectSO().name.Equals("Plate"))
             {
-                Debug.Log("Player is carrying a plate");
                 //player is carrying a plate
                 PlateObject plateObject = player.getKitchenObject() as PlateObject;
+
+                if(plateObject.GetIngridientsOnThePlate().Count == 0)
+                {
+                    plateObject.DestroySelf();
+                    ResetTimerPriorityLogicValues();
+                    OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
+                    OnOrderDeliveryFailDeliveryCounter?.Invoke(this, EventArgs.Empty);
+                    Order.IncrementFailedOrders();
+                    return;
+                }
+                   
 
                 for (int i = 0; i < orderList.Count; i++)
                 {
                     if (CompareLists(plateObject.GetIngridientsOnThePlate(), orderList[i].GetOrderIngredientList()))
                     {
-                        Debug.Log("Players plate matched with order");
                         //players plate matches with the order
                         matchingOrders.Add(orderList[i]);
                     }
@@ -63,11 +70,15 @@ public class DeliveryCounter : BaseCounter
                 matchingOrders[correctIndex].CompleteSuccesfullOrder();
                 plateObject.DestroySelf();
                 ResetTimerPriorityLogicValues();
-                OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
-                OnOrderDeliverySuccess?.Invoke(this, EventArgs.Empty);
+                OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);                
                 return;
 
                 //if code executes after this line, it means the player provided a wrong plate
+                plateObject.DestroySelf();
+                ResetTimerPriorityLogicValues();
+                OnPlateAmountChangedY?.Invoke(this, EventArgs.Empty);
+                OnOrderDeliveryFailDeliveryCounter?.Invoke(this, EventArgs.Empty);
+                Order.IncrementFailedOrders();
             }
         }
     }

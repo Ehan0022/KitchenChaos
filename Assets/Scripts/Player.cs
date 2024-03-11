@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private KitchenChaosGameManager gameManager;
     public static BaseCounter selectedCounter;
 
     [SerializeField] Transform spawnPoint;
@@ -16,10 +17,17 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private bool isMoving;
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public event EventHandler OnKitchenObjectPickedUp;
+    public event EventHandler <OnMoveSatusChangedEventArgs> OnMoveSatusChanged;
 
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
         public BaseCounter selectedCounter;
+    }
+
+    public class OnMoveSatusChangedEventArgs : EventArgs
+    {
+        public bool moveStatus;
     }
 
     private void Start()
@@ -31,6 +39,9 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, System.EventArgs e)
     {
+        if (!gameManager.IsGamePlaying())
+            return;
+
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
@@ -40,7 +51,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     //bu fonksiyon Interaksiyonlarý halleder
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if(selectedCounter!=null)
+        if (!gameManager.IsGamePlaying())
+            return;
+
+        if (selectedCounter!=null)
         {
             selectedCounter.Interact(this);
         }
@@ -56,7 +70,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
        
     }
 
-    
+     
     private void HandleMovement()
     {
         //moveVector ayarlama
@@ -76,8 +90,12 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         float playerRadius = 0.7f;
         float moveDistance = Time.deltaTime * moveSpeed;
 
+        
+        
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveVector, moveDistance);
 
+       
+        
 
         //hareket
 
@@ -105,8 +123,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
             {
                 transform.position = transform.position + zCheck * Time.deltaTime * moveSpeed;
             }
-
         }
+
+         
+
+        
     }
 
     Vector3 lastMoveVector;
@@ -188,6 +209,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void setKitchenObject(KitchenObject kitchenObject)
     {
         kitchenObjectOnTop = kitchenObject;
+        OnKitchenObjectPickedUp?.Invoke(this, EventArgs.Empty);
     }
 
     public KitchenObject getKitchenObject()
