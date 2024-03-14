@@ -5,6 +5,7 @@ using System;
 
 public class KitchenChaosGameManager : MonoBehaviour
 {
+    [SerializeField] GameInput gameInput;
     public enum State
     {
         WaitingForStart,
@@ -18,6 +19,7 @@ public class KitchenChaosGameManager : MonoBehaviour
     private float waitingToStartTimer = 1f;
     [SerializeField]  private float countdownToStartTimer = 3f;
     private float gamePlayingTimer = 1500f;
+    private bool isGamePaused = false;
 
     // Update is called once per frame
 
@@ -39,7 +41,15 @@ public class KitchenChaosGameManager : MonoBehaviour
     private void Start()
     {
         gameProgress.OnLevelEnd += GameProgress_OnLevelEnd;
+        gameInput.OnPauseAction += GameInput_OnPauseAction;
     }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e)
+    {
+        TogglePause();
+    }
+
+
 
     private void GameProgress_OnLevelEnd(object sender, GameProgressBarUI.OnLevelEndEventArgs e)
     {
@@ -89,6 +99,23 @@ public class KitchenChaosGameManager : MonoBehaviour
     public float GetCountDownToStartTimer()
     {
         return countdownToStartTimer;
+    }
+
+    [SerializeField] GameObject pauseMenu;
+    public void TogglePause()
+    {
+        if(isGamePaused == false)
+        {
+            Time.timeScale = 0f;
+            pauseMenu.SetActive(true);
+            isGamePaused = true;
+        }
+        else if(isGamePaused == true)
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+            isGamePaused = false;
+        }
     }
 
        

@@ -17,6 +17,11 @@ public class PlateObject : KitchenObject
         public KitchenObjectSO KitchenObjectSO;
     }
 
+    public static void ResetStaticData()
+    {
+        OnIngridientAddedSound = null;
+    }
+
     public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO)
     {
         if(!validIngredients.Contains(kitchenObjectSO))

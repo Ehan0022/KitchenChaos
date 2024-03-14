@@ -16,6 +16,8 @@ public class CookingCounter : BaseCounter
         public bool thereIsCookableObjectOnTop;
     }
 
+    
+
 
     //CookingCounters Interact fires an event if a cookable object is placed
     public override void Interact(Player player)
@@ -71,9 +73,7 @@ public class CookingCounter : BaseCounter
 
     
     private void Update()
-    {
-       
-        
+    {             
         HandleCooking();     
     }
 

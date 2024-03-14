@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
         cookingCounter.OnCookableObjectPlaced += CookingCounter_OnCookableObjectPlaced;
         playerSound.OnFootStepOccured += PlayerSound_OnFootStepOccured;
         PlateObject.OnIngridientAddedSound += PlateObject_OnIngridientAddedSound;
+        StoveSound.SetActive(false);
     }
 
     //plate object start
@@ -37,6 +38,7 @@ public class SoundManager : MonoBehaviour
     private void CookingCounter_OnCookableObjectPlaced(object sender, CookingCounter.OnCookableObjectPlacedEventArgs e)
     {
         StoveSound.SetActive(e.thereIsCookableObjectOnTop);
+        Debug.Log("Stove þalteri atýldý" + e.thereIsCookableObjectOnTop);
     }
 
     //trash counter start
